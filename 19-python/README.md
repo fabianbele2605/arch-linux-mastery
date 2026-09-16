@@ -1,3 +1,0 @@
-# Python para sysadmin
-
-> Módulo pendiente — todavía no desarrollado en el curso.

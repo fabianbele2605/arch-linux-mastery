@@ -40,7 +40,7 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 ### 🔄 Fase IV — Development & Automation
 - [x] [17 — Bash profesional](17-bash/17-bash-profesional.md)
 - [x] [18 — Git](18-git/18-git.md)
-- [ ] 19 — Python para sysadmin
+- [x] [19 — Python para sysadmin](19-python/19-python-para-sysadmin.md)
 - [ ] 20 — C para entender Linux
 - [ ] 21 — Rust para sistemas
 
