@@ -187,6 +187,23 @@ grub-mkconfig -o /boot/grub/grub.cfg        # regenera la configuración
 
 ---
 
+## Nota real del curso: cuando el laboratorio se topa con un imprevisto
+
+Al intentar arrancar desde el ISO live para este módulo, descubrimos que el archivo `archlinux-*.iso` ya no existía en el disco (probablemente borrado después de la instalación original). Esto generó una sesión completa de troubleshooting real — cambiar el orden de arranque, forzar apagados limpios, intentar el menú F12, hasta encontrar la causa raíz: VirtualBox marcaba el ISO con un ícono de advertencia (medio inaccesible). Quedó documentado abajo como evidencia de diagnóstico real, y el laboratorio de `arch-chroot` (secciones 5 y 6) se retoma en cuanto se descargue un ISO nuevo.
+
+## Evidencias
+
+![Snapshot "Instantánea 2" tomado antes de romper nada](evidencias/01-snapshot-instantanea-2-tomado.png)
+![Boot Device Order: Óptica antes que Disco duro](evidencias/02-boot-device-order-optica-antes-disco.png)
+![Primer intento: arrancó el sistema normal, no el ISO](evidencias/03-primer-intento-arranco-sistema-normal.png)
+![Apagado completo (Apagar la máquina, sin restaurar snapshot)](evidencias/04-apagado-completo-cerrar-maquina.png)
+![Reinicio con Start with GUI](evidencias/05-iniciar-start-with-gui.png)
+![F12 registrado tarde: cae en el GRUB del propio sistema](evidencias/06-f12-tarde-cae-en-grub.png)
+![Con el disco duro deshabilitado: "Could not read from the boot medium"](evidencias/07-disco-duro-deshabilitado-no-bootable-medium.png)
+![Hallazgo: el ISO aparece con ícono de advertencia (archivo roto/inaccesible)](evidencias/08-hallazgo-iso-icono-rojo-archivo-roto.png)
+
+---
+
 ## Cierre de Fase III — Networking & Security
 
 Con este módulo termina la Fase III completa: Networking, SSH, Firewall/hardening, Logs/troubleshooting, y Recuperación de sistemas rotos. A esta altura ya completaste 8 de los 10 incidentes "Break & Fix" oficiales de la guía (#1, #2, #4, #5, #6, #7, #8, #9 — quedan pendientes #3 "Permisos de archivos incorrectos" y #10 "Conflicto de gestión de paquetes", que vas a resolver naturalmente más adelante en el curso).

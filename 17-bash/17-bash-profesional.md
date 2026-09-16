@@ -276,4 +276,12 @@ Al ejecutarlo, vas a ver que el script se **detiene después de "Paso 1"** y nun
 
 ---
 
+## Evidencias
+
+![Primera ejecución de monitor.sh](evidencias/01-monitor-sh-primera-ejecucion.png)
+![Editando el script extendido en nano](evidencias/02-nano-script-extendido.png)
+![monitor-extendido.sh corriendo en modo completo y --breve](evidencias/03-monitor-extendido-ambos-modos.png)
+
+---
+
 **Próximo módulo:** 18 — Git.
