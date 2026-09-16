@@ -34,7 +34,7 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 - [x] [12 — Networking](12-networking/12-networking.md)
 - [x] [13 — SSH](13-ssh/13-ssh.md)
 - [x] [14 — Firewall y hardening](14-firewall-security/14-firewall-y-hardening.md)
-- [ ] 15 — Logs y troubleshooting
+- [x] [15 — Logs y troubleshooting](15-logs-troubleshooting/15-logs-y-troubleshooting.md)
 - [ ] 16 — Recuperación de sistemas rotos
 
 ### ⬜ Fase IV — Development & Automation
@@ -69,7 +69,7 @@ Incidentes simulados de la metodología SÍNTOMA → OBSERVACIÓN → LOG → CA
 - [x] #6 — Bootloader dañado (Módulo 10)
 - [ ] #7 — initramfs corrupto
 - [x] #8 — Firewall mal configurado (Módulo 14)
-- [ ] #9 — Disco lleno / filesystem inconsistente
+- [x] #9 — Disco lleno / filesystem inconsistente (Módulo 15)
 - [ ] #10 — Conflicto de gestión de paquetes
 
 ---
