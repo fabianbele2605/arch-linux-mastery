@@ -30,15 +30,15 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 - [x] [10 — Proceso de arranque (boot)](10-boot/10-proceso-de-arranque.md)
 - [x] [11 — Almacenamiento (LVM, RAID, LUKS)](11-storage/11-almacenamiento.md)
 
-### 🔄 Fase III — Networking & Security
+### ✅ Fase III — Networking & Security
 - [x] [12 — Networking](12-networking/12-networking.md)
 - [x] [13 — SSH](13-ssh/13-ssh.md)
 - [x] [14 — Firewall y hardening](14-firewall-security/14-firewall-y-hardening.md)
 - [x] [15 — Logs y troubleshooting](15-logs-troubleshooting/15-logs-y-troubleshooting.md)
-- [ ] 16 — Recuperación de sistemas rotos
+- [x] [16 — Recuperación de sistemas rotos](16-recovery/16-recuperacion-de-sistemas-rotos.md)
 
-### ⬜ Fase IV — Development & Automation
-- [ ] 17 — Bash profesional
+### 🔄 Fase IV — Development & Automation
+- [x] [17 — Bash profesional](17-bash/17-bash-profesional.md)
 - [ ] 18 — Git
 - [ ] 19 — Python para sysadmin
 - [ ] 20 — C para entender Linux
@@ -65,9 +65,9 @@ Incidentes simulados de la metodología SÍNTOMA → OBSERVACIÓN → LOG → CA
 - [x] #2 — Acceso SSH bloqueado (Módulo 13)
 - [ ] #3 — Permisos de archivos incorrectos
 - [x] #4 — Servicio systemd caído (Módulo 09)
-- [ ] #5 — `/etc/fstab` corrupto
+- [x] #5 — `/etc/fstab` corrupto (Módulo 16)
 - [x] #6 — Bootloader dañado (Módulo 10)
-- [ ] #7 — initramfs corrupto
+- [x] #7 — initramfs corrupto (Módulo 16)
 - [x] #8 — Firewall mal configurado (Módulo 14)
 - [x] #9 — Disco lleno / filesystem inconsistente (Módulo 15)
 - [ ] #10 — Conflicto de gestión de paquetes
