@@ -208,6 +208,10 @@ df -h /mnt/pruebas
 ## Evidencias
 
 ![journalctl -p err -b, dmesg -H y journalctl --disk-usage](evidencias/01-journalctl-dmesg-disk-usage.png)
+![Recuperar volumen LVM tras reinicio (vgchange + mount)](evidencias/02-recuperar-volumen-lvm-vgchange-mount.png)
+![Primer intento de dd: no llegó a llenar el volumen](evidencias/03-dd-primer-intento-no-lleno-volumen.png)
+![Break & Fix: disco lleno, "No space left on device"](evidencias/04-breakfix-disco-lleno-no-space-left.png)
+![Solución validada: espacio liberado](evidencias/05-solucion-validada-espacio-liberado.png)
 
 ---
 
