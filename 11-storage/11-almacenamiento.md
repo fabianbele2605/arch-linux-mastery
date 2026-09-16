@@ -195,4 +195,11 @@ Con este módulo termina la Fase II: instalación, pacman/AUR, systemd, boot, y 
 
 ---
 
+## Evidencias
+
+![Abrir, formatear y montar volumen LUKS](evidencias/01-luks-abrir-formatear-montar.png)
+![Volumen LUKS cerrado: filesystem no reconocido](evidencias/02-luks-cerrado-filesystem-no-reconocido.png)
+
+---
+
 **Próximo módulo:** 12 — Networking (inicio de la Fase III — Networking & Security).

@@ -187,4 +187,13 @@ sudo systemctl restart NetworkManager
 
 ---
 
+## Evidencias
+
+![Diagnóstico de red: ip, nmcli, ping en capas](evidencias/01-diagnostico-red-ip-nmcli-ping.png)
+![resolv.conf original](evidencias/02-resolv-conf-original.png)
+![Break & Fix: DNS roto](evidencias/03-breakfix-dns-roto.png)
+![Break & Fix: DNS restaurado y validado](evidencias/04-breakfix-dns-restaurado.png)
+
+---
+
 **Próximo módulo:** 13 — SSH.

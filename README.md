@@ -33,7 +33,7 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 ### 🔄 Fase III — Networking & Security
 - [x] [12 — Networking](12-networking/12-networking.md)
 - [x] [13 — SSH](13-ssh/13-ssh.md)
-- [ ] 14 — Firewall y hardening
+- [x] [14 — Firewall y hardening](14-firewall-security/14-firewall-y-hardening.md)
 - [ ] 15 — Logs y troubleshooting
 - [ ] 16 — Recuperación de sistemas rotos
 
@@ -68,7 +68,7 @@ Incidentes simulados de la metodología SÍNTOMA → OBSERVACIÓN → LOG → CA
 - [ ] #5 — `/etc/fstab` corrupto
 - [x] #6 — Bootloader dañado (Módulo 10)
 - [ ] #7 — initramfs corrupto
-- [ ] #8 — Firewall mal configurado
+- [x] #8 — Firewall mal configurado (Módulo 14)
 - [ ] #9 — Disco lleno / filesystem inconsistente
 - [ ] #10 — Conflicto de gestión de paquetes
 

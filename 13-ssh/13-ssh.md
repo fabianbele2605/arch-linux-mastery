@@ -188,4 +188,24 @@ ssh fabian@localhost      # ahora debería volver a funcionar (por clave, ya con
 
 ---
 
+## Evidencias
+
+![openssh instalado y primera conexión](evidencias/01-openssh-instalado-primera-conexion.png)
+![ssh-keygen: inicio](evidencias/02-ssh-keygen-inicio.png)
+![ssh-keygen completo](evidencias/03-ssh-keygen-completo.png)
+![ssh-copy-id exitoso](evidencias/04-ssh-copy-id-exitoso.png)
+![known_hosts y permisos de la clave privada](evidencias/05-known-hosts-y-permisos-clave.png)
+![Break & Fix: sshd_config modificado](evidencias/06-breakfix-sshd-config-modificado.png)
+![Verificación: PasswordAuthentication y PubkeyAuthentication en no](evidencias/07-verificacion-config-en-no.png)
+![KbdInteractiveAuthentication y drop-ins de configuración](evidencias/08-kbdinteractive-y-dropins.png)
+![99-archlinux.conf y reintento de conexión](evidencias/09-archlinux-conf-dropin-reintento.png)
+![sshd -T confirma los tres métodos en no](evidencias/10-sshd-T-confirmacion-no.png)
+![SSH sigue pidiendo contraseña (misterio en investigación)](evidencias/11-ssh-sigue-pidiendo-password.png)
+![Después de reiniciar el sistema, sigue fallando igual](evidencias/12-post-reboot-sigue-fallando.png)
+![sshd -T -C simulando la conexión exacta](evidencias/13-sshd-T-C-simulando-conexion.png)
+![systemctl cat sshd.service](evidencias/14-systemctl-cat-sshd-service.png)
+![Configuración restaurada y acceso validado](evidencias/15-restaurado-y-validado.png)
+
+---
+
 **Próximo módulo:** 14 — Firewall y hardening.
