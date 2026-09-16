@@ -6,3 +6,6 @@
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Carpeta de imagenes
+/img

@@ -205,4 +205,10 @@ df -h /mnt/pruebas
 
 ---
 
+## Evidencias
+
+![journalctl -p err -b, dmesg -H y journalctl --disk-usage](evidencias/01-journalctl-dmesg-disk-usage.png)
+
+---
+
 **Próximo módulo:** 16 — Recuperación de sistemas rotos (cierre de la Fase III).
