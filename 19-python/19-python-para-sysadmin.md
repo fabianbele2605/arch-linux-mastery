@@ -234,6 +234,15 @@ Como la VM no tiene portapapeles compartido con el host, todo el script se tipe�
 
 ---
 
+## Evidencias
+
+![Instalación de python y python-pip](evidencias/01-instalacion-python-pip.png)
+![Typo detectado: add:argument en vez de add_argument](evidencias/02-typo-add-colon-argument-detectado.png)
+![NameError con sugerencia automática de Python ("Did you mean...?")](evidencias/03-nameerror-sugerencia-automatica-python.png)
+![Resultado final: el analizador corriendo correctamente](evidencias/04-resultado-final-funcionando.png)
+
+---
+
 ## Checklist de cierre del módulo
 
 - [ ] Entiendo cuándo elegir Python sobre Bash y viceversa.
