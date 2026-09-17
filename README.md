@@ -41,7 +41,7 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 - [x] [17 — Bash profesional](17-bash/17-bash-profesional.md)
 - [x] [18 — Git](18-git/18-git.md)
 - [x] [19 — Python para sysadmin](19-python/19-python-para-sysadmin.md)
-- [ ] 20 — C para entender Linux
+- [x] [20 — C para entender Linux](20-c/20-c-para-entender-linux.md)
 - [ ] 21 — Rust para sistemas
 
 ### ⬜ Fase V — Infrastructure & Advanced Systems
