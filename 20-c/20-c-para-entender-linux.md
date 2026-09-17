@@ -184,6 +184,15 @@ Vas a ver el crash en vivo, con la línea exacta del código que lo causó. Sal�
 
 ---
 
+## Evidencias
+
+![hola.c compilado y corrido](evidencias/01-hola-c-compilado-y-corrido.png)
+![fork_demo corrido varias veces, con PIDs distintos cada vez](evidencias/02-fork-demo-varias-corridas.png)
+![Segfault provocado intencionalmente](evidencias/03-segfault-provocado.png)
+![Diagnóstico completo con gdb: list + print puntero](evidencias/04-gdb-diagnostico-completo.png)
+
+---
+
 ## Checklist de cierre del módulo
 
 - [ ] Entiendo por qué C es el lenguaje del kernel y qué es una syscall.
