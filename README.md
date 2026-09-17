@@ -44,8 +44,8 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 - [x] [20 — C para entender Linux](20-c/20-c-para-entender-linux.md)
 - [x] [21 — Rust para sistemas](21-rust/21-rust-para-sistemas.md)
 
-### ⬜ Fase V — Infrastructure & Advanced Systems
-- [ ] 22 — Kernel Linux
+### 🔄 Fase V — Infrastructure & Advanced Systems
+- [x] [22 — Kernel Linux](22-kernel/22-kernel-linux.md)
 - [ ] 23 — Virtualización (QEMU/KVM/libvirt)
 - [ ] 24 — Contenedores (Docker/Podman)
 - [ ] 25 — Servidores web (Nginx/Caddy/TLS)
