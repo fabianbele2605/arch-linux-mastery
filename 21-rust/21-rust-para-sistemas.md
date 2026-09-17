@@ -195,6 +195,16 @@ let s2 = s1.clone();   // ahora hay DOS strings independientes, cada una con su 
 
 ---
 
+## Evidencias
+
+![Rust instalado, primer proyecto hola_rust](evidencias/01-rust-instalado-hola-rust.png)
+![Ownership: error "borrow of moved value" con sugerencia del compilador](evidencias/02-ownership-error-borrow-of-moved-value.png)
+![.clone() corrige el error de ownership](evidencias/03-clone-corrige-el-error.png)
+![Option: Some y None manejados correctamente](evidencias/04-option-some-none.png)
+![Panic controlado: unwrap() sobre None](evidencias/05-panic-unwrap-sobre-none.png)
+
+---
+
 ## Checklist de cierre del módulo (y de la Fase IV completa)
 
 - [ ] Entiendo qué problema de memoria de C resuelve el ownership de Rust.
