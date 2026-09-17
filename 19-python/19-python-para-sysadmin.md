@@ -219,6 +219,21 @@ Python, a diferencia de bash, te da un **traceback completo**: el archivo, la l�
 
 ---
 
+## Nota real del curso: cuando escribir código a mano (sin copiar/pegar) es el verdadero desafío
+
+Como la VM no tiene portapapeles compartido con el host, todo el script se tipeó a mano dentro de la terminal. Esto generó una sesión de debugging real y valiosa, con errores genuinos de Python (no simulados):
+
+- `TabError: inconsistent use of tabs and spaces` — mezcla de tabs y espacios al tipear en `nano`.
+- `IndentationError: unindent does not match any outer indentation level` — niveles de indentación inconsistentes.
+- Una línea de `argparse` completa perdida al tipear.
+- Un typo `add:argument` en vez de `add_argument`.
+- `default=WARNING` sin comillas (intentaba usar una variable inexistente en vez de un string).
+- `NameError` por una variable con un nombre ligeramente distinto (`niveles_valido` vs `niveles_validos`) — Python sugirió la corrección automáticamente (`Did you mean: ...?`), una función real del intérprete que vale la pena conocer.
+
+**Lección clave:** leer el traceback completo, de abajo hacia arriba, fue lo que permitió resolver cada error en segundos en vez de minutos. Quedan dos bugs menores de lógica sin resolver (conteo de `WARNING` incorrecto, y un mensaje de "líneas restantes" con número negativo) — documentados aquí como deuda técnica real, no como algo "mal cerrado": en el mundo real, no todo bug se resuelve en la misma sesión, y saber cuándo seguir adelante es parte de la habilidad.
+
+---
+
 ## Checklist de cierre del módulo
 
 - [ ] Entiendo cuándo elegir Python sobre Bash y viceversa.
