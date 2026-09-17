@@ -37,12 +37,12 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 - [x] [15 — Logs y troubleshooting](15-logs-troubleshooting/15-logs-y-troubleshooting.md)
 - [x] [16 — Recuperación de sistemas rotos](16-recovery/16-recuperacion-de-sistemas-rotos.md)
 
-### 🔄 Fase IV — Development & Automation
+### ✅ Fase IV — Development & Automation
 - [x] [17 — Bash profesional](17-bash/17-bash-profesional.md)
 - [x] [18 — Git](18-git/18-git.md)
 - [x] [19 — Python para sysadmin](19-python/19-python-para-sysadmin.md)
 - [x] [20 — C para entender Linux](20-c/20-c-para-entender-linux.md)
-- [ ] 21 — Rust para sistemas
+- [x] [21 — Rust para sistemas](21-rust/21-rust-para-sistemas.md)
 
 ### ⬜ Fase V — Infrastructure & Advanced Systems
 - [ ] 22 — Kernel Linux
