@@ -240,6 +240,9 @@ sudo systemctl restart nftables
 
 ## Evidencias
 
+**01 — `nftables` instalado y habilitado**
+Instalación del paquete `nftables` (ya estaba actualizado, se reinstaló) y activación del servicio con `systemctl enable --now nftables`.
+
 ![nftables instalado y habilitado](evidencias/01-nftables-instalado-habilitado.png)
 
 ---

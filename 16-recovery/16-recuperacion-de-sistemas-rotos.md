@@ -193,13 +193,44 @@ Al intentar arrancar desde el ISO live para este módulo, descubrimos que el arc
 
 ## Evidencias
 
+**01 — Snapshot "Instantánea 2" tomado antes de romper nada**
+Red de seguridad de VirtualBox creada antes de iniciar el módulo, siguiendo la recomendación de tomar snapshot antes de cualquier laboratorio que toque bootloader/initramfs/disco.
+
 ![Snapshot "Instantánea 2" tomado antes de romper nada](evidencias/01-snapshot-instantanea-2-tomado.png)
+
+**02 — Boot Device Order: Óptica antes que Disco duro**
+Configuración de la VM confirmando que el dispositivo óptico (ISO) tiene prioridad de arranque sobre el disco duro.
+
 ![Boot Device Order: Óptica antes que Disco duro](evidencias/02-boot-device-order-optica-antes-disco.png)
+
+**03 — Primer intento: arrancó el sistema normal, no el ISO**
+A pesar del orden de arranque configurado, la VM booteó el sistema instalado en disco en vez del ISO — primer indicio de que la VM no se apagó/encendió realmente "en frío".
+
 ![Primer intento: arrancó el sistema normal, no el ISO](evidencias/03-primer-intento-arranco-sistema-normal.png)
+
+**04 — Apagado completo**
+Se eligió explícitamente "Apagar la máquina" (sin restaurar snapshot) desde el diálogo de cierre de VirtualBox, para forzar un apagado ACPI real.
+
 ![Apagado completo (Apagar la máquina, sin restaurar snapshot)](evidencias/04-apagado-completo-cerrar-maquina.png)
+
+**05 — Reinicio con "Start with GUI"**
+Encendido de la VM desde cero tras el apagado completo, para que el firmware vuelva a evaluar el orden de arranque desde el principio.
+
 ![Reinicio con Start with GUI](evidencias/05-iniciar-start-with-gui.png)
+
+**06 — F12 registrado tarde: cae en el GRUB del propio sistema**
+El intento de forzar el menú de selección de arranque con F12 llegó tarde; en su lugar apareció el GRUB del sistema ya instalado, junto a un aviso menor de VirtualBox.
+
 ![F12 registrado tarde: cae en el GRUB del propio sistema](evidencias/06-f12-tarde-cae-en-grub.png)
+
+**07 — Disco duro deshabilitado: "Could not read from the boot medium"**
+Al quitar el disco duro del orden de arranque para forzar el uso del ISO, la BIOS no pudo leer ningún medio arrancable — reveló que el problema no era el orden de arranque sino el propio archivo ISO.
+
 ![Con el disco duro deshabilitado: "Could not read from the boot medium"](evidencias/07-disco-duro-deshabilitado-no-bootable-medium.png)
+
+**08 — Hallazgo: el ISO tiene ícono de advertencia**
+En Configuración → Almacenamiento, el archivo `archlinux-2026.08.01-x86_64.iso` aparece marcado con un ícono rojo de advertencia — VirtualBox no puede acceder al archivo. Se confirmó que el archivo había sido borrado del disco tras la instalación original, resolviéndose con la descarga de un ISO nuevo.
+
 ![Hallazgo: el ISO aparece con ícono de advertencia (archivo roto/inaccesible)](evidencias/08-hallazgo-iso-icono-rojo-archivo-roto.png)
 
 ---

@@ -278,8 +278,19 @@ Al ejecutarlo, vas a ver que el script se **detiene después de "Paso 1"** y nun
 
 ## Evidencias
 
+**01 — Primera ejecución de `monitor.sh`**
+El script del Proyecto 6 corrió de punta a punta: CPU, memoria, disco, top 5 procesos y chequeo de servicios fallidos (ninguno), demostrando `set -euo pipefail` y el flujo condicional funcionando en un caso real.
+
 ![Primera ejecución de monitor.sh](evidencias/01-monitor-sh-primera-ejecucion.png)
+
+**02 — Editando el script extendido en `nano`**
+Escritura de `monitor-extendido.sh`, agregando la función `chequear_espacio()`, el modo `--breve` y el `trap` de limpieza.
+
 ![Editando el script extendido en nano](evidencias/02-nano-script-extendido.png)
+
+**03 — `monitor-extendido.sh` en modo completo y `--breve`**
+Ambas ejecuciones mostraron "Monitor finalizado" al final gracias al `trap`, y el modo `--breve` cortó correctamente después de la sección de memoria, sin llegar a disco/procesos/servicios.
+
 ![monitor-extendido.sh corriendo en modo completo y --breve](evidencias/03-monitor-extendido-ambos-modos.png)
 
 ---

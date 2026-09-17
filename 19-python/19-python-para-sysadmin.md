@@ -236,9 +236,24 @@ Como la VM no tiene portapapeles compartido con el host, todo el script se tipe�
 
 ## Evidencias
 
+**01 — Instalación de `python` y `python-pip`**
+Instalación de 9 paquetes (intérprete, pip, y dependencias como `cryptography`, `packaging`), paso previo a crear el entorno virtual del proyecto.
+
 ![Instalación de python y python-pip](evidencias/01-instalacion-python-pip.png)
+
+**02 — Typo detectado: `add:argument` en vez de `add_argument`**
+Durante la sesión de debugging (script tipeado a mano, sin copiar/pegar), se encontró que una línea de `argparse` tenía dos puntos en vez de guion bajo, y le faltaban comillas al valor por defecto (`default=WARNING` en vez de `default="WARNING"`).
+
 ![Typo detectado: add:argument en vez de add_argument](evidencias/02-typo-add-colon-argument-detectado.png)
+
+**03 — `NameError` con sugerencia automática de Python**
+Un nombre de variable ligeramente distinto (`niveles_valido` vs `niveles_validos`) generó un `NameError` — Python sugirió automáticamente la corrección correcta (`Did you mean: 'niveles_validos'?`).
+
 ![NameError con sugerencia automática de Python ("Did you mean...?")](evidencias/03-nameerror-sugerencia-automatica-python.png)
+
+**04 — Resultado final funcionando**
+El analizador de logs corrió sin errores, mostrando el resumen de niveles y las líneas relevantes filtradas por `--nivel ERROR` (con dos bugs menores de lógica documentados como deuda técnica).
+
 ![Resultado final: el analizador corriendo correctamente](evidencias/04-resultado-final-funcionando.png)
 
 ---

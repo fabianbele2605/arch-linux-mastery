@@ -186,9 +186,24 @@ Vas a ver el crash en vivo, con la línea exacta del código que lo causó. Sal�
 
 ## Evidencias
 
+**01 — `hola.c` compilado y corrido**
+Primer programa en C compilado con `gcc` sin ningún error de sintaxis (C no depende de indentación), confirmando el flujo básico de compilación.
+
 ![hola.c compilado y corrido](evidencias/01-hola-c-compilado-y-corrido.png)
+
+**02 — `fork_demo` corrido varias veces**
+Cuatro ejecuciones consecutivas mostrando PIDs de padre e hijo distintos cada vez, con el patrón típico del kernel asignando PIDs secuenciales — `fork()` real generando procesos reales.
+
 ![fork_demo corrido varias veces, con PIDs distintos cada vez](evidencias/02-fork-demo-varias-corridas.png)
+
+**03 — Segfault provocado intencionalmente**
+Desreferenciar un puntero `NULL` generó `Segmentation fault (core dumped)`, tal como predice la teoría de gestión de memoria en C.
+
 ![Segfault provocado intencionalmente](evidencias/03-segfault-provocado.png)
+
+**04 — Diagnóstico completo con `gdb`**
+Tras recompilar con `-g` (símbolos de debug), `gdb` señaló la línea exacta del crash (`segfault.c:5`) y `print puntero` confirmó el valor `0x0` (NULL) como causa raíz.
+
 ![Diagnóstico completo con gdb: list + print puntero](evidencias/04-gdb-diagnostico-completo.png)
 
 ---

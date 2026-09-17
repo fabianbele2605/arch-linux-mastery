@@ -189,9 +189,24 @@ sudo systemctl restart NetworkManager
 
 ## Evidencias
 
+**01 — Diagnóstico de red en capas**
+Se ejecutó `ip addr show`, `ip route show` y `nmcli device status`, confirmando la interfaz `enp0s3` (IP `10.0.2.15/24`, gateway `10.0.2.2`) y las interfaces virtuales de Docker. Los `ping` a `8.8.8.8` y `archlinux.org` respondieron con 0% de pérdida, validando las 4 capas de conectividad.
+
 ![Diagnóstico de red: ip, nmcli, ping en capas](evidencias/01-diagnostico-red-ip-nmcli-ping.png)
+
+**02 — `/etc/resolv.conf` original**
+Contenido real del sistema, gestionado por NetworkManager: dos servidores DNS (`10.0.2.3` y su equivalente IPv6) y un dominio de búsqueda de Tailscale.
+
 ![resolv.conf original](evidencias/02-resolv-conf-original.png)
+
+**03 — Break & Fix: DNS roto**
+Tras reemplazar `/etc/resolv.conf` por un servidor DNS inválido (`1.2.3.4`), `ping 8.8.8.8` sigue funcionando (capa de red intacta) pero `ping archlinux.org` falla con `Temporary failure in name resolution` — aislando el problema exactamente en la resolución DNS.
+
 ![Break & Fix: DNS roto](evidencias/03-breakfix-dns-roto.png)
+
+**04 — Break & Fix: DNS restaurado y validado**
+Al restaurar el `resolv.conf` original desde el backup, `archlinux.org` vuelve a resolver correctamente (`209.126.35.79`), confirmando la solución.
+
 ![Break & Fix: DNS restaurado y validado](evidencias/04-breakfix-dns-restaurado.png)
 
 ---

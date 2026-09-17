@@ -197,7 +197,14 @@ Con este módulo termina la Fase II: instalación, pacman/AUR, systemd, boot, y 
 
 ## Evidencias
 
+**01 — Volumen LUKS abierto, formateado y montado**
+Tras crear el Logical Volume `lv_cifrado`, se ejecutó `cryptsetup luksFormat` + `cryptsetup open`, se formateó `/dev/mapper/datos_seguros` con ext4, se montó en `/mnt/seguro` y se escribió/leyó un archivo de prueba (`secreto.txt`) exitosamente.
+
 ![Abrir, formatear y montar volumen LUKS](evidencias/01-luks-abrir-formatear-montar.png)
+
+**02 — Volumen LUKS cerrado: filesystem no reconocido**
+Al cerrar el volumen (`cryptsetup close`) e intentar montarlo directamente sin volver a abrirlo, el sistema arroja `unknown filesystem type 'crypto_LUKS'` — confirma que sin la contraseña correcta, el contenido es completamente inaccesible.
+
 ![Volumen LUKS cerrado: filesystem no reconocido](evidencias/02-luks-cerrado-filesystem-no-reconocido.png)
 
 ---

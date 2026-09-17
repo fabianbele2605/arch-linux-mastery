@@ -197,10 +197,29 @@ let s2 = s1.clone();   // ahora hay DOS strings independientes, cada una con su 
 
 ## Evidencias
 
+**01 — Rust instalado, primer proyecto `hola_rust`**
+Instalación de `rust` (4 paquetes, ~313 MiB) y primer proyecto creado con `cargo new` + `cargo run`, imprimiendo "Hello, world!" sin configuración manual de compilador.
+
 ![Rust instalado, primer proyecto hola_rust](evidencias/01-rust-instalado-hola-rust.png)
+
+**02 — Ownership: error "borrow of moved value"**
+Al intentar usar una variable `String` después de moverla a otra, el compilador rechazó la compilación con `error[E0382]`, explicando la causa y sugiriendo `.clone()` como solución — detectado en tiempo de compilación, no en runtime.
+
 ![Ownership: error "borrow of moved value" con sugerencia del compilador](evidencias/02-ownership-error-borrow-of-moved-value.png)
+
+**03 — `.clone()` corrige el error**
+Aplicando la sugerencia del compilador (`s1.clone()`), el programa compiló y corrió correctamente, imprimiendo "hola" dos veces desde dos `String` independientes.
+
 ![.clone() corrige el error de ownership](evidencias/03-clone-corrige-el-error.png)
+
+**04 — `Option`: `Some` y `None` manejados correctamente**
+La función `buscar_usuario` devolvió `Some("fabian")` para un ID válido y `None` para uno inválido, ambos casos cubiertos explícitamente con `match` — sin riesgo de `NULL`.
+
 ![Option: Some y None manejados correctamente](evidencias/04-option-some-none.png)
+
+**05 — Panic controlado: `.unwrap()` sobre `None`**
+Llamar `.unwrap()` sobre un valor `None` compiló sin problema pero falló en runtime con un mensaje claro y preciso (línea y causa exacta), muy distinto al segfault silencioso de C del Módulo 20.
+
 ![Panic controlado: unwrap() sobre None](evidencias/05-panic-unwrap-sobre-none.png)
 
 ---

@@ -190,20 +190,79 @@ ssh fabian@localhost      # ahora debería volver a funcionar (por clave, ya con
 
 ## Evidencias
 
+**01 — openssh instalado y primera conexión**
+Se instaló `openssh`, se habilitó `sshd` con `systemctl enable --now`, y se realizó la primera conexión a `localhost`: se aceptó el fingerprint del servidor (quedó guardado en `known_hosts`) y se autenticó con contraseña.
+
 ![openssh instalado y primera conexión](evidencias/01-openssh-instalado-primera-conexion.png)
+
+**02 — `ssh-keygen`: inicio**
+Comienzo de la generación del par de claves `ed25519`, eligiendo la ubicación por defecto (`~/.ssh/id_ed25519`).
+
 ![ssh-keygen: inicio](evidencias/02-ssh-keygen-inicio.png)
+
+**03 — `ssh-keygen` completo**
+Par de claves generado (con passphrase vacía para la práctica), mostrando el fingerprint y el "randomart" de la clave.
+
 ![ssh-keygen completo](evidencias/03-ssh-keygen-completo.png)
+
+**04 — `ssh-copy-id` exitoso**
+La clave pública se copió al servidor (`1 key(s) added`); la conexión siguiente ya no pidió contraseña, confirmando autenticación por clave funcionando.
+
 ![ssh-copy-id exitoso](evidencias/04-ssh-copy-id-exitoso.png)
+
+**05 — `known_hosts` y permisos de la clave privada**
+`known_hosts` lista las tres huellas (ed25519, rsa, ecdsa) de `localhost`; `ls -l` confirma que `id_ed25519` tiene permisos `600` (solo el dueño puede leerla/escribirla), como exige SSH.
+
 ![known_hosts y permisos de la clave privada](evidencias/05-known-hosts-y-permisos-clave.png)
+
+**06 — Break & Fix: `sshd_config` modificado**
+Se deshabilitaron `PasswordAuthentication` y `PubkeyAuthentication` a propósito (incidente #2 de la guía) y se reinició `sshd`; la conexión sigue pidiendo contraseña, primer indicio de que hay más de una directiva involucrada.
+
 ![Break & Fix: sshd_config modificado](evidencias/06-breakfix-sshd-config-modificado.png)
+
+**07 — Verificación: `PasswordAuthentication` y `PubkeyAuthentication` en `no`**
+`grep` confirma que ambas directivas quedaron correctamente en `no` en el archivo principal, descartando un error de edición simple.
+
 ![Verificación: PasswordAuthentication y PubkeyAuthentication en no](evidencias/07-verificacion-config-en-no.png)
+
+**08 — `KbdInteractiveAuthentication` y drop-ins de configuración**
+Se descubre que `KbdInteractiveAuthentication` (autenticación interactiva vía PAM) puede seguir habilitada independientemente de `PasswordAuthentication`, y que existen archivos de configuración adicionales en `/etc/ssh/sshd_config.d/`.
+
 ![KbdInteractiveAuthentication y drop-ins de configuración](evidencias/08-kbdinteractive-y-dropins.png)
+
+**09 — `99-archlinux.conf` y reintento de conexión**
+El drop-in de Arch ya traía `KbdInteractiveAuthentication no` por defecto; tras agregarlo también en el archivo principal y reiniciar `sshd`, la conexión sigue pidiendo contraseña — el misterio persiste.
+
 ![99-archlinux.conf y reintento de conexión](evidencias/09-archlinux-conf-dropin-reintento.png)
+
+**10 — `sshd -T` confirma los tres métodos en `no`**
+El volcado de configuración efectiva de `sshd` (`sshd -T`) confirma que `PasswordAuthentication`, `PubkeyAuthentication` y `KbdInteractiveAuthentication` están los tres en `no` — en teoría, ninguna autenticación debería ser posible.
+
 ![sshd -T confirma los tres métodos en no](evidencias/10-sshd-T-confirmacion-no.png)
+
+**11 — SSH sigue pidiendo contraseña (misterio en investigación)**
+A pesar de la configuración efectiva confirmada, la conexión real sigue ofreciendo autenticación por contraseña — se descarta un problema de sintaxis y se profundiza el diagnóstico.
+
 ![SSH sigue pidiendo contraseña (misterio en investigación)](evidencias/11-ssh-sigue-pidiendo-password.png)
+
+**12 — Después de reiniciar el sistema, sigue fallando igual**
+Se descarta que sea un proceso `sshd` "viejo" no recargado: tras un reinicio completo de la VM, el comportamiento persiste idéntico.
+
 ![Después de reiniciar el sistema, sigue fallando igual](evidencias/12-post-reboot-sigue-fallando.png)
+
+**13 — `sshd -T -C` simulando la conexión exacta**
+Se usa `sshd -T -C addr=127.0.0.1,user=fabian,host=localhost` para ver la configuración tal como la evaluaría el servidor para esa conexión específica, y se descarta la existencia de bloques `Match` que pudieran estar reactivando algún método.
+
 ![sshd -T -C simulando la conexión exacta](evidencias/13-sshd-T-C-simulando-conexion.png)
+
+**14 — `systemctl cat sshd.service`**
+Se inspecciona la unidad real de systemd para confirmar que `sshd` corre en modo tradicional (no socket-activated) y usa la ruta de configuración esperada — sin encontrar la causa raíz definitiva.
+
 ![systemctl cat sshd.service](evidencias/14-systemctl-cat-sshd-service.png)
+
+**15 — Configuración restaurada y acceso validado**
+Se restauró `sshd_config` desde el backup tomado antes del experimento; la conexión por clave volvió a funcionar sin pedir contraseña, cerrando el incidente con el sistema en un estado funcional (aunque la causa exacta del comportamiento anómalo quedó documentada como misterio no resuelto).
+
 ![Configuración restaurada y acceso validado](evidencias/15-restaurado-y-validado.png)
 
 ---

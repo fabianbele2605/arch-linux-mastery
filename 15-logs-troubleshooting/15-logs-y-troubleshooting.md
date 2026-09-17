@@ -207,10 +207,29 @@ df -h /mnt/pruebas
 
 ## Evidencias
 
+**01 — `journalctl -p err -b`, `dmesg -H` y `journalctl --disk-usage`**
+Se encontró un error benigno de `vmwgfx` (driver gráfico virtual, no soportado en este hipervisor), se confirmó que `dmesg` sin `sudo` da `Operation not permitted` (kernel restringido), y el journal ocupa 24M en disco.
+
 ![journalctl -p err -b, dmesg -H y journalctl --disk-usage](evidencias/01-journalctl-dmesg-disk-usage.png)
+
+**02 — Recuperar volumen LVM tras reinicio**
+El volumen `/mnt/pruebas` del Módulo 11 ya no estaba montado (los volúmenes LVM no persisten sin entrada en `fstab`). Se reactivó con `vgscan` + `vgchange -ay vg_datos` y se volvió a montar correctamente.
+
 ![Recuperar volumen LVM tras reinicio (vgchange + mount)](evidencias/02-recuperar-volumen-lvm-vgchange-mount.png)
+
+**03 — Primer intento de `dd`: no llegó a llenar el volumen**
+Un primer `dd` de 3500MB copió sin error dentro del volumen de 3.7G — quedó espacio libre, así que el incidente de "disco lleno" todavía no se disparó.
+
 ![Primer intento de dd: no llegó a llenar el volumen](evidencias/03-dd-primer-intento-no-lleno-volumen.png)
+
+**04 — Break & Fix: disco lleno**
+Un segundo `dd` sin límite de tamaño (`count`) agotó el espacio restante, generando el error real `No space left on device` — incidente #9 de la guía provocado con éxito.
+
 ![Break & Fix: disco lleno, "No space left on device"](evidencias/04-breakfix-disco-lleno-no-space-left.png)
+
+**05 — Solución validada: espacio liberado**
+Se borraron ambos archivos de prueba y `df -h` confirmó el volumen de vuelta a su estado normal (796K usado sobre 3.7G).
+
 ![Solución validada: espacio liberado](evidencias/05-solucion-validada-espacio-liberado.png)
 
 ---
