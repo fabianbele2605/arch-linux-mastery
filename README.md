@@ -46,7 +46,7 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 
 ### 🔄 Fase V — Infrastructure & Advanced Systems
 - [x] [22 — Kernel Linux](22-kernel/22-kernel-linux.md)
-- [ ] 23 — Virtualización (QEMU/KVM/libvirt)
+- [x] [23 — Virtualización (QEMU/KVM/libvirt)](23-virtualization/23-virtualizacion.md)
 - [ ] 24 — Contenedores (Docker/Podman)
 - [ ] 25 — Servidores web (Nginx/Caddy/TLS)
 - [ ] 26 — Bases de datos (PostgreSQL)
