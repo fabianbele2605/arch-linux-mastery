@@ -172,4 +172,48 @@ sudo rmmod modulo_que_no_existe
 
 ---
 
+## Evidencias
+
+**01 — `lsmod`, `sysctl` y `/proc/sys` en paralelo**
+74 módulos cargados; `net.ipv4.ip_forward` en `1` (probablemente activado por Docker), confirmado igual vía `sysctl` y lectura directa de `/proc/sys`.
+
+![lsmod, sysctl y proc/sys](evidencias/01-lsmod-sysctl-proc-sys.png)
+
+**02 — `linux-headers` y `base-devel` instalados**
+Paquetes necesarios para compilar módulos contra el kernel actual (`7.2.6-arch2-1`).
+
+![linux-headers instalados](evidencias/02-linux-headers-instalados.png)
+
+**03 — Módulo en C corregido (`MODULE_LICENSE`)**
+Se detectó y corrigió el typo `MODULE_LICENCE` (con C) por la macro real `MODULE_LICENSE` (con S) antes de intentar compilar.
+
+![modulo.c corregido](evidencias/03-modulo-c-corregido-module-license.png)
+
+**04 — `Makefile` con tabs confirmados**
+Verificación con `cat -A` mostrando `^I` (tab real) al inicio de las líneas `make -C`, requisito estricto de sintaxis de `Makefile`.
+
+![Makefile con tabs confirmados](evidencias/04-makefile-con-tabs-confirmados.png)
+
+**05 — Primer intento de `make`: error de comilla faltante**
+La primera compilación falló por una comilla de cierre faltante en el `printk` de la línea 10 — diagnosticado con el mensaje de error del compilador y corregido con `sed`.
+
+![Primer intento de make: error de comilla](evidencias/05-primer-intento-make-error-comilla.png)
+
+**06 — `make` exitoso**
+Tras corregir el error de sintaxis, la compilación generó `hola_kernel.ko` sin errores (solo un warning benigno de versión de `pahole`).
+
+![make exitoso](evidencias/06-make-exitoso.png)
+
+**07 — `insmod` + `dmesg`: "Hola desde el kernel!"**
+El módulo se cargó correctamente; `dmesg` muestra el mensaje `printk` del módulo, los avisos normales de "tainting" por módulo no firmado, y como hallazgo bonus, el registro histórico del segfault del Módulo 20.
+
+![insmod y dmesg mostrando Hola desde el kernel](evidencias/07-insmod-dmesg-hola-desde-kernel.png)
+
+**08 — `rmmod` + "Chau desde el kernel!"**
+Descarga limpia del módulo, con el mensaje de salida (`hola_exit`) confirmado en el journal del kernel y `lsmod` ya sin listarlo.
+
+![rmmod y Chau desde el kernel](evidencias/08-rmmod-chau-desde-kernel.png)
+
+---
+
 **Próximo módulo:** 23 — Virtualización (QEMU/KVM/libvirt).
