@@ -207,4 +207,83 @@ sudo nginx -t
 
 ---
 
+## Evidencias
+
+**01 — Nginx instalado, página de bienvenida**
+Instalación y activación de Nginx; `curl localhost` confirma la página por defecto.
+
+![Nginx instalado](evidencias/01-nginx-instalado-pagina-bienvenida.png)
+
+**02 — `nginx.conf`: bloque de reverse proxy editado**
+Nuevo `server` en el puerto 8082 apuntando con `proxy_pass` al contenedor Docker del Módulo 24.
+
+![nginx.conf con reverse proxy](evidencias/02-nginx-conf-reverse-proxy-editado.png)
+
+**03 — `nginx -t` y reload**
+Validación de sintaxis exitosa antes de aplicar el cambio.
+
+![nginx -t y reload](evidencias/03-nginx-t-validar-reload.png)
+
+**04 — `curl` al reverse proxy exitoso**
+El puerto 8082 devolvió la página del contenedor, mediada por Nginx.
+
+![curl reverse proxy exitoso](evidencias/04-curl-reverse-proxy-exitoso.png)
+
+**05 — `docker ps`: contenedor backend activo**
+Confirmación de que el contenedor `mi-contenedor-web-1` (del `docker-compose` del Módulo 24) seguía corriendo en el puerto 8080.
+
+![docker ps confirma contenedor activo](evidencias/05-docker-ps-confirma-contenedor-activo.png)
+
+**06 — Typo real en `openssl -subj`**
+Un espacio de más al tipear el comando multilínea partió `-subj` en dos tokens, generando un error de sintaxis de OpenSSL.
+
+![openssl typo en -subj](evidencias/06-openssl-typo-subj-error.png)
+
+**07 — Certificado autofirmado generado**
+Tras corregir el comando en una sola línea, `openssl req` generó la clave y el certificado sin problemas.
+
+![Certificado autofirmado generado](evidencias/07-certificado-autofirmado-generado.png)
+
+**08 — `nginx.conf` completo: proxy + TLS**
+Vista de los dos bloques `server` conviviendo: el reverse proxy (8082) y el servidor HTTPS con certificado autofirmado (8443).
+
+![nginx.conf completo con proxy y SSL](evidencias/08-nginx-conf-completo-proxy-y-ssl.png)
+
+**09 — `curl -k https`: TLS funcionando**
+Conexión HTTPS exitosa contra el certificado autofirmado, usando `-k` para omitir la verificación de confianza (esperado, ya que es autofirmado).
+
+![curl https TLS exitoso](evidencias/09-curl-https-tls-exitoso.png)
+
+**10 — Caddy instalado**
+Instalación del paquete `caddy` y creación automática de su usuario de sistema.
+
+![Caddy instalado](evidencias/10-caddy-instalado.png)
+
+**11 — `Caddyfile` con `tls internal`**
+Configuración mínima pidiendo TLS automático mediante la CA interna de Caddy.
+
+![Caddyfile con tls internal](evidencias/11-caddyfile-tls-internal.png)
+
+**12 — Caddy falla: puerto 80 ya en uso**
+El primer intento de arrancar Caddy falló porque intenta escuchar automáticamente en el puerto 80 (ocupado por Nginx) para redirecciones HTTP→HTTPS.
+
+![Caddy falla: puerto 80 en uso](evidencias/12-caddy-falla-puerto-80-en-uso.png)
+
+**13 — `auto_https off`: fix del conflicto de puerto**
+Se agregó el bloque de opciones globales al `Caddyfile` para deshabilitar el listener automático en el puerto 80.
+
+![Caddyfile con auto_https off](evidencias/13-caddyfile-auto-https-off-fix.png)
+
+**14 — Caddy corriendo, pero el TLS interno falla**
+El servicio ya arranca (`active running`), pero no logra instalar/generar correctamente su CA interna (`pki.ca.local`), y el handshake TLS falla con `SSLv1 alert internal error`.
+
+![Caddy corriendo pero TLS falla](evidencias/14-caddy-corriendo-pero-tls-falla.png)
+
+**15 — Limitación documentada: TLS de Caddy sin resolver**
+Tras varios reintentos idénticos, se documentó como limitación real del entorno (permisos del usuario de servicio de Caddy) en vez de seguir invirtiendo tiempo — el objetivo pedagógico ya se había cumplido con Nginx.
+
+![Caddy TLS sin resolver, limitación documentada](evidencias/15-caddy-tls-sin-resolver-limitacion-documentada.png)
+
+---
+
 **Próximo módulo:** 26 — Bases de datos (PostgreSQL).
