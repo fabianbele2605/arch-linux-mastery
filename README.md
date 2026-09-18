@@ -48,7 +48,7 @@ No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** 
 - [x] [22 — Kernel Linux](22-kernel/22-kernel-linux.md)
 - [x] [23 — Virtualización (QEMU/KVM/libvirt)](23-virtualization/23-virtualizacion.md)
 - [x] [24 — Contenedores (Docker/Podman)](24-containers/24-contenedores.md)
-- [ ] 25 — Servidores web (Nginx/Caddy/TLS)
+- [x] [25 — Servidores web (Nginx/Caddy/TLS)](25-web-servers/25-servidores-web.md)
 - [ ] 26 — Bases de datos (PostgreSQL)
 - [ ] 27 — DevOps (CI/CD, Ansible, IaC)
 - [ ] 28 — Observabilidad (Prometheus/Grafana)
