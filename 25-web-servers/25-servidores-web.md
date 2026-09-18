@@ -161,6 +161,17 @@ curl -k https://localhost:9443
 
 ---
 
+## Nota real del curso: cuando Caddy no coopera
+
+Al probar Caddy en la VM, aparecieron dos problemas reales:
+
+1. **Conflicto de puerto 80**: Caddy intenta escuchar automáticamente en el puerto 80 para redirigir HTTP→HTTPS, chocando con el Nginx ya corriendo ahí. Se resolvió con `auto_https off` en el bloque de opciones globales del `Caddyfile`.
+2. **Fallo persistente de TLS interno**: incluso después de resolver el conflicto de puerto, Caddy no pudo completar la generación/instalación de su CA interna (`pki.ca.local`) — el log mostraba `failed to execute sudo: exit status 1`, porque el usuario de servicio de Caddy no tiene permisos para instalar certificados en el almacén de confianza del sistema. El handshake TLS fallaba consistentemente con `SSLv1 alert internal error`, sin resolverse tras varios reintentos.
+
+**Decisión:** como el objetivo pedagógico (entender TLS y probar un mecanismo de "TLS automático") ya se cumplió con éxito usando Nginx + certificado autofirmado manual, se documentó esta limitación de Caddy como deuda técnica en vez de seguir invirtiendo tiempo — la misma disciplina de "cuándo cortar y seguir adelante" aplicada en los Módulos 13 y 19.
+
+---
+
 ## 7. PRÁCTICA
 
 1. Instalá Nginx, servilo como archivos estáticos en el puerto 8081.
