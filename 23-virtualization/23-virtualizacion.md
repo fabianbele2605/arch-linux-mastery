@@ -141,4 +141,18 @@ Si en cambio tu VM sí existe pero falla al arrancar con un error relacionado a 
 
 ---
 
+## Evidencias
+
+**01 — Verificación de virtualización anidada**
+`egrep -c '(vmx|svm)' /proc/cpuinfo` devolvió `0` — confirmado, sin aceleración KVM disponible dentro de esta VM anidada.
+
+![Verificación de virtualización anidada](evidencias/01-verificacion-virtualizacion-anidada.png)
+
+**02 — Instalación de `qemu-full`: lucha con mirrors**
+La instalación (263 MiB) se topó con mirrors lentos/inestables repetidamente, incluso cambiando de red. Quedó pendiente de completar con una conexión más estable — documentado como trabajo en progreso real, no oculto.
+
+![Instalación de qemu-full: lucha con mirrors](evidencias/02-instalacion-qemu-full-lucha-mirrors.png)
+
+---
+
 **Próximo módulo:** 24 — Contenedores (Docker/Podman).

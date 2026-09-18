@@ -190,4 +190,103 @@ docker rm mi-nginx
 
 ---
 
+## Evidencias
+
+**01 — `docker ps -a`: auditoría de contenedores previos**
+El sistema ya tenía 9 contenedores detenidos de un proyecto anterior ("entrevista"): una API, Postgres, Redis, y un stack completo de observabilidad (Grafana, Prometheus, Loki, Tempo, Alertmanager, Promtail).
+
+![docker ps -a: auditoría previa](evidencias/01-docker-ps-auditoria-previa.png)
+
+**02 — `docker images`: auditoría de imágenes**
+11 imágenes descargadas de ese proyecto, ~2.2 GB en total.
+
+![docker images: auditoría](evidencias/02-docker-images-auditoria.png)
+
+**03 — `nginx` corrido y `curl` exitoso**
+Contenedor de nginx levantado con mapeo de puerto (`8080:80`); `curl localhost:8080` devolvió la página de bienvenida real.
+
+![nginx run y curl exitoso](evidencias/03-nginx-run-y-curl-exitoso.png)
+
+**04 — `docker exec`: `hostname` distinto, `ps` no disponible**
+Dentro del contenedor, `hostname` coincide con el Container ID (namespace UTS en acción); `ps` no está instalado en la imagen minimalista de nginx.
+
+![exec hostname y ps not found](evidencias/04-exec-hostname-ps-not-found.png)
+
+**05 — Desde el host: los procesos de nginx SÍ son visibles**
+`ps aux | grep nginx` desde el host muestra el proceso master y 4 workers con PIDs reales — prueba de que el namespace PID aísla la *percepción*, no la realidad del proceso.
+
+![ps aux desde el host ve los procesos de nginx](evidencias/05-ps-aux-host-ve-procesos-nginx.png)
+
+**06 — `Dockerfile` y `app.py` propios**
+Imagen personalizada basada en `archlinux:latest`, con Python instalado y un script propio copiado adentro.
+
+![Dockerfile y app.py](evidencias/06-dockerfile-y-app-py.png)
+
+**07 — Error: falta el punto de contexto de build**
+`docker build -t mi-imagen-arch` sin el `.` final falla porque no se especificó el contexto (carpeta) del build.
+
+![Error: falta el punto de contexto](evidencias/07-error-falta-punto-contexto-build.png)
+
+**08 — DNS timeout dentro del contenedor**
+`pacman -Sy` dentro del `Dockerfile` falló resolviendo los mirrors, incluso con buena conexión en el host — primera señal de un problema específico de red de contenedores.
+
+![DNS timeout dentro del contenedor](evidencias/08-dns-timeout-dentro-contenedor.png)
+
+**09 — `resolv.conf`: host vs. contenedor**
+El contenedor heredó `nameserver 10.0.2.3` del host — un DNS que VirtualBox expone solo para la interfaz principal de la VM, no fácilmente alcanzable desde el namespace de red de un contenedor.
+
+![resolv.conf host vs contenedor](evidencias/09-resolv-conf-host-vs-contenedor.png)
+
+**10 — `daemon.json`: DNS público configurado**
+Se configuró Docker para usar `8.8.8.8`/`1.1.1.1` en vez del DNS heredado del host, confirmado en el `resolv.conf` del contenedor tras reiniciar el daemon.
+
+![daemon.json con DNS público](evidencias/10-daemon-json-dns-publico.png)
+
+**11 — `ping` con 100% de pérdida: el problema es más profundo que DNS**
+Ni siquiera una IP directa (`8.8.8.8`, sin DNS de por medio) era alcanzable desde el contenedor — descartó el DNS como causa única y apuntó a un problema de reenvío de tráfico.
+
+![ping 100% de pérdida](evidencias/11-ping-100-perdida-mas-alla-de-dns.png)
+
+**12 — Hallazgo: `chain forward { policy drop; }` vacía**
+La causa raíz real: el firewall configurado en el Módulo 14 tenía la cadena `forward` completamente vacía con política `drop`, bloqueando todo el tráfico reenviado del bridge de Docker hacia internet.
+
+![Hallazgo: forward chain en policy drop](evidencias/12-hallazgo-forward-chain-policy-drop.png)
+
+**13 — Fix aplicado: `ping` exitoso**
+Tras agregar reglas de `accept` para `docker0` y conexiones establecidas, el `ping` desde el contenedor funcionó con 0% de pérdida.
+
+![Fix aplicado: ping exitoso](evidencias/13-fix-forward-chain-ping-exitoso.png)
+
+**14 — `/etc/nftables.conf` con el fix persistido**
+El arreglo se agregó también al archivo de configuración permanente, validado con `nft -c -f` antes de aplicar.
+
+![nftables.conf con el fix persistido](evidencias/14-nftables-conf-persistido.png)
+
+**15 — `docker build` exitoso**
+Con el firewall corregido, la construcción de la imagen completó sin errores de red.
+
+![docker build exitoso](evidencias/15-docker-build-exitoso.png)
+
+**16 — `docker run`: mensaje final**
+La imagen propia corrió correctamente, imprimiendo el mensaje esperado.
+
+![docker run mensaje final](evidencias/16-docker-run-mensaje-final.png)
+
+**17 — `docker-compose.yml`: error de tabs**
+El archivo YAML tenía tabs reales en la indentación (efecto colateral de haber desactivado `tabstospaces` para el `Makefile` del Módulo 22) — YAML no permite tabs en absoluto.
+
+![docker-compose.yml: error de tabs](evidencias/17-docker-compose-yml-tabs-error.png)
+
+**18 — `docker-compose.yml`: espacio faltante**
+Tras arreglar los tabs, apareció un segundo error de sintaxis: `image:postgres:16` sin espacio después de los dos puntos.
+
+![docker-compose.yml: espacio faltante](evidencias/18-docker-compose-yml-espacio-faltante.png)
+
+**19 — `docker-compose up -d` exitoso**
+Ambos servicios (`web` con nginx, `db` con Postgres) levantados y corriendo correctamente, con su propia red dedicada.
+
+![docker-compose up exitoso](evidencias/19-docker-compose-up-exitoso.png)
+
+---
+
 **Próximo módulo:** 25 — Servidores web (Nginx/Caddy/TLS).
