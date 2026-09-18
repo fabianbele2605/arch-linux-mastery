@@ -2,9 +2,27 @@
 
 **De Cero a Ingeniero de Sistemas Linux**
 
-Curso de formación profesional que lleva a un estudiante desde cero conocimiento de Linux hasta un nivel de administrador de sistemas / ingeniero DevOps / ingeniero de seguridad, usando **Arch Linux** como laboratorio principal de aprendizaje.
+![Progreso](https://img.shields.io/badge/progreso-25%2F30%20m%C3%B3dulos-brightgreen)
+![Break & Fix](https://img.shields.io/badge/break%20%26%20fix-8%2F10%20incidentes-orange)
+![Fases](https://img.shields.io/badge/fases-4%2F6%20completas-blue)
+![Método](https://img.shields.io/badge/m%C3%A9todo-hands--on%20en%20Arch%20Linux%20real-informational)
 
-No es un tutorial de comandos. Cada módulo enseña primero **por qué existe** y **cómo funciona** algo, antes de mostrar **cómo se usa** — con laboratorios prácticos, errores intencionales ("Break & Fix") y ejercicios de diagnóstico real.
+---
+
+## 🎯 De qué se trata esto
+
+Un curso propio, de 30 módulos, para pasar de cero conocimiento de Linux a nivel de administrador de sistemas / DevOps / seguridad — usando **Arch Linux real en una VM** como único laboratorio, no un simulador ni una serie de videos.
+
+**No es "seguir instrucciones".** Cada módulo se ejecuta de verdad en mi propia terminal, y cada resultado (bueno o roto) queda documentado con evidencia real: capturas de pantalla con descripción de qué pasó, qué comando lo causó, y cómo se diagnosticó.
+
+Lo uso como caso de estudio de **aprender una habilidad técnica profunda con un tutor de IA**: la IA diseña el currículum, explica el "por qué" antes del "cómo", y me hace ejecutar todo yo mismo en mi propia VM — corrigiendo errores reales de tipeo, de red, de configuración, tal como pasarían en un trabajo real.
+
+### Algunos hallazgos reales del camino (no simulados)
+
+- 🔥 Un firewall mal configurado en el **Módulo 14** rompió silenciosamente todo el tráfico de Docker **10 módulos después**, en el Módulo 24 — tuve que diagnosticarlo yo mismo, en capas, hasta encontrar la causa raíz.
+- 🕵️ Descubrí en pleno debugging de certificados que la red wifi que estaba usando intercepta tráfico HTTPS con un firewall corporativo (Fortinet) — un hallazgo de seguridad real, no parte del plan.
+- 🔧 Escribí, compilé y cargué mi propio módulo de kernel en C, con bugs reales de sintaxis que tuve que resolver con `gdb` y lectura de logs del kernel.
+- 🐘 Encontré y aproveché para auditar un stack completo de observabilidad (Grafana, Prometheus, Loki) que tenía olvidado en Docker de un proyecto anterior.
 
 📖 **[Ver la guía completa del curso](docs/guia.md)** — fases, metodología, evaluación, proyectos y cronograma.
 
@@ -74,12 +92,16 @@ Incidentes simulados de la metodología SÍNTOMA → OBSERVACIÓN → LOG → CA
 
 ---
 
+## Cómo está documentado cada módulo
+
+Cada carpeta de módulo tiene su archivo `.md` con teoría + práctica, y una carpeta `evidencias/` con capturas reales de mi propia VM, cada una con una descripción de qué comando se corrió y qué pasó — incluyendo los errores reales (typos, problemas de red, configuraciones mal hechas) y cómo se diagnosticaron y resolvieron.
+
 ## Estructura del repositorio
 
 ```
 arch-linux-mastery/
 ├── docs/guia.md              ← guía completa del curso
-├── 00-fundamentals/ ... 30-osdev/    ← un módulo por carpeta
+├── 00-fundamentals/ ... 30-osdev/    ← un módulo por carpeta, con su evidencias/
 ├── labs/break-and-fix/        ← laboratorios de incidentes simulados
 ├── projects/                    ← proyectos progresivos del curso
 ├── cheatsheets/                  ← referencias rápidas
