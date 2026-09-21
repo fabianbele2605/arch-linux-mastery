@@ -2,7 +2,7 @@
 
 **De Cero a Ingeniero de Sistemas Linux**
 
-![Progreso](https://img.shields.io/badge/progreso-25%2F30%20m%C3%B3dulos-brightgreen)
+![Progreso](https://img.shields.io/badge/progreso-26%2F30%20m%C3%B3dulos-brightgreen)
 ![Break & Fix](https://img.shields.io/badge/break%20%26%20fix-8%2F10%20incidentes-orange)
 ![Fases](https://img.shields.io/badge/fases-4%2F6%20completas-blue)
 ![Método](https://img.shields.io/badge/m%C3%A9todo-hands--on%20en%20Arch%20Linux%20real-informational)
