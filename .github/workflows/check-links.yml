@@ -16,8 +16,7 @@ jobs:
       - name: Contar modulos completados
         run: |
           echo "Modulos con contenido:"
-          find . -maxdepth 2 -name "*.md" -not -name
-"README.md" -not -path "./docs/*" | wc -l
+          find . -maxdepth 2 -name "*.md" -not -name "README.md" -not -path "./docs/*" | wc -l
 
       - name: Verificar que el README existe y no esta vacio
         run: |
