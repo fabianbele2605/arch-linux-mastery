@@ -219,4 +219,68 @@ INSERT INTO pedidos (usuario_id, producto, monto) VALUES (999, 'Producto fantasm
 
 ---
 
+## Evidencias
+
+**01 — Contenedores detenidos: error al conectar**
+`docker-compose ps` no mostró nada activo; los contenedores del Módulo 24 habían quedado detenidos entre sesiones.
+
+![Contenedores detenidos](evidencias/01-contenedores-detenidos-error.png)
+
+**02 — Tabla `usuarios` creada, con typo real corregido**
+Tras levantar los contenedores, se creó la base `curso_arch` y la tabla `usuarios`. Un primer `INSERT` falló por escribir `VALUE` en vez de `VALUES`; corregido al toque, ambos inserts y el `SELECT` funcionaron.
+
+![Tabla usuarios creada](evidencias/02-tabla-usuarios-creada-insert-select.png)
+
+**03 — Tabla `pedidos` y error de `JOIN` con sugerencia automática**
+`pedidos.usuarios_id` (typo) generó un error con `HINT` de PostgreSQL sugiriendo la columna correcta — mismo patrón que el `NameError` de Python en el Módulo 19.
+
+![JOIN con typo y HINT](evidencias/03-tabla-pedidos-join-typo-error-hint.png)
+
+**04 — `JOIN` exitoso**
+Consulta combinando `usuarios` y `pedidos` devolviendo los datos relacionados correctamente.
+
+![JOIN exitoso](evidencias/04-join-exitoso.png)
+
+**05 — Violación de clave foránea**
+Intentar insertar un pedido con un `usuario_id` inexistente fue rechazado automáticamente por PostgreSQL, protegiendo la integridad de los datos.
+
+![Foreign key violada](evidencias/05-foreign-key-violada.png)
+
+**06 — Rol con permisos limitados**
+`CREATE ROLE` + `GRANT` puntuales, aplicando el principio de menor privilegio del Módulo 04.
+
+![Roles con permisos limitados](evidencias/06-roles-permisos-limitados.png)
+
+**07 — Backup con `pg_dump`**
+Dump completo de la base generado y verificado, listo para restaurar si hiciera falta.
+
+![pg_dump backup](evidencias/07-pg-dump-backup.png)
+
+**08 — `psycopg2-binary` instalado**
+Entorno virtual y driver de PostgreSQL para Python listos para el Proyecto 10.
+
+![psycopg2 instalado](evidencias/08-psycopg2-instalado.png)
+
+**09 — Primer intento de `app.py`: conexión rechazada**
+`Connection refused` — el puerto 5432 del contenedor `db` nunca se había expuesto al host en el `docker-compose.yml`.
+
+![Connection refused](evidencias/09-app-py-connection-refused.png)
+
+**10 — Puerto 5432 mapeado**
+Se agregó `ports: - "5432:5432"` al servicio `db` y se recreó el contenedor; `docker-compose ps` confirma el mapeo.
+
+![Puerto 5432 mapeado](evidencias/10-puerto-5432-mapeado.png)
+
+**11 — Segundo error: tabla `tarea` (singular) vs. `tareas` (plural)**
+Con la conexión ya funcionando, apareció `relation "tareas" does not exist` — un typo de singular/plural entre el `CREATE TABLE` y el resto del script.
+
+![Error tabla tarea singular](evidencias/11-tabla-tarea-singular-error.png)
+
+**12 — Fix final: aplicación funcionando de punta a punta**
+Corregido con `sed`, el script creó la tabla, insertó y leyó una fila desde PostgreSQL correctamente.
+
+![Fix final funcionando](evidencias/12-fix-final-app-funcionando.png)
+
+---
+
 **Próximo módulo:** 27 — DevOps (CI/CD, Ansible, IaC).
