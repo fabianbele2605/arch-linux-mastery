@@ -67,7 +67,7 @@ Lo uso como caso de estudio de **aprender una habilidad técnica profunda con un
 - [x] [23 — Virtualización (QEMU/KVM/libvirt)](23-virtualization/23-virtualizacion.md)
 - [x] [24 — Contenedores (Docker/Podman)](24-containers/24-contenedores.md)
 - [x] [25 — Servidores web (Nginx/Caddy/TLS)](25-web-servers/25-servidores-web.md)
-- [ ] 26 — Bases de datos (PostgreSQL)
+- [x] [26 — Bases de datos (PostgreSQL)](26-databases/26-bases-de-datos.md)
 - [ ] 27 — DevOps (CI/CD, Ansible, IaC)
 - [ ] 28 — Observabilidad (Prometheus/Grafana)
 - [ ] 29 — Ciberseguridad defensiva
