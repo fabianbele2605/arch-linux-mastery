@@ -160,4 +160,68 @@ docker start entrevista-prometheus-1
 
 ---
 
+## Evidencias
+
+**01 — Stack "entrevista" detenido**
+Los 9 contenedores de un proyecto anterior (API, Postgres, Redis, Prometheus, Alertmanager, Loki, Tempo, Grafana, Promtail) seguían ahí, todos detenidos.
+
+![Stack entrevista detenido](evidencias/01-docker-ps-stack-entrevista-detenido.png)
+
+**02 — Localizar el `docker-compose.yml` original**
+Búsqueda en todo el sistema hasta encontrar `~/entrevista/docker-compose.yml`, el proyecto completo con toda su configuración.
+
+![Encontrar docker-compose original](evidencias/02-encontrar-docker-compose-original.png)
+
+**03 — Stack completo levantado**
+`docker-compose up -d` levantó los 9 servicios de una vez, con sus puertos reales (Prometheus 9090, Grafana 3000, Loki 3100, etc.).
+
+![docker-compose up 9 servicios](evidencias/03-docker-compose-up-9-servicios.png)
+
+**04 — Prometheus scrapeando el target `order-api`**
+Confirmación del modelo pull: Prometheus consulta activamente `api:8080/metrics` cada 15s, con `health: "up"`.
+
+![Prometheus targets scraping](evidencias/04-prometheus-targets-scraping.png)
+
+**05 — Query `up` devuelve `1`**
+La métrica más básica de Prometheus, confirmando que el servicio está vivo.
+
+![Prometheus query up](evidencias/05-prometheus-query-up.png)
+
+**06 — Grafana: health check OK**
+`database: "ok"`, versión 11.1.0 — Grafana sano (este endpoint no requiere autenticación).
+
+![Grafana health check](evidencias/06-grafana-health-check.png)
+
+**07 — Error 401: `admin:admin` no es la contraseña real**
+El endpoint `/api/datasources` sí requiere autenticación, y las credenciales por defecto fallaron.
+
+![Grafana datasources 401](evidencias/07-grafana-datasources-401-password-incorrecta.png)
+
+**08 — Encontrando la contraseña real**
+`GRAFANA_ADMIN_PASSWORD=admin123` en el `.env` del proyecto original.
+
+![Encontrar password real en .env](evidencias/08-encontrar-password-real-en-env.png)
+
+**09 — Respuesta vacía con la contraseña correcta**
+Con `admin123`, `curl -s` no devolvió nada — el `-s` ocultaba un problema de conexión real.
+
+![Respuesta vacía, error de JSON](evidencias/09-respuesta-vacia-json-error.png)
+
+**10 — `Connection refused` confirmado**
+Sin `-s`, se ve el error real: Grafana no estaba aceptando conexiones en ese momento.
+
+![Connection refused Grafana](evidencias/10-connection-refused-grafana.png)
+
+**11 — Logs de Grafana: arrancando sin errores fatales**
+El contenedor estaba iniciando normalmente (`HTTP Server Listen address=[::]:3000`), solo con warnings benignos — el `curl` anterior falló por timing, no por un problema real.
+
+![Logs de Grafana arrancando](evidencias/11-logs-grafana-arrancando-sin-crash.png)
+
+**12 — Datasources confirmadas: Loki, Prometheus, Tempo**
+Reintentando después de que Grafana terminara de arrancar, las 3 fuentes de datos aparecieron correctamente provisionadas, `readOnly: true` (configuración declarativa, no manual).
+
+![Datasources confirmadas](evidencias/12-datasources-confirmadas-loki-prometheus-tempo.png)
+
+---
+
 **Próximo módulo:** 29 — Ciberseguridad defensiva.
