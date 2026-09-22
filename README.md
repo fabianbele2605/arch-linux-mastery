@@ -2,9 +2,9 @@
 
 **De Cero a Ingeniero de Sistemas Linux**
 
-![Progreso](https://img.shields.io/badge/progreso-29%2F30%20m%C3%B3dulos-brightgreen)
+![Progreso](https://img.shields.io/badge/progreso-30%2F30%20m%C3%B3dulos-brightgreen)
 ![Break & Fix](https://img.shields.io/badge/break%20%26%20fix-8%2F10%20incidentes-orange)
-![Fases](https://img.shields.io/badge/fases-4%2F6%20completas-blue)
+![Fases](https://img.shields.io/badge/fases-5%2F6%20completas-blue)
 ![Método](https://img.shields.io/badge/m%C3%A9todo-hands--on%20en%20Arch%20Linux%20real-informational)
 
 ---
@@ -62,7 +62,7 @@ Lo uso como caso de estudio de **aprender una habilidad técnica profunda con un
 - [x] [20 — C para entender Linux](20-c/20-c-para-entender-linux.md)
 - [x] [21 — Rust para sistemas](21-rust/21-rust-para-sistemas.md)
 
-### 🔄 Fase V — Infrastructure & Advanced Systems
+### ✅ Fase V — Infrastructure & Advanced Systems
 - [x] [22 — Kernel Linux](22-kernel/22-kernel-linux.md)
 - [x] [23 — Virtualización (QEMU/KVM/libvirt)](23-virtualization/23-virtualizacion.md)
 - [x] [24 — Contenedores (Docker/Podman)](24-containers/24-contenedores.md)
@@ -71,7 +71,7 @@ Lo uso como caso de estudio de **aprender una habilidad técnica profunda con un
 - [x] [27 — DevOps (CI/CD, Ansible, IaC)](27-devops/27-devops.md)
 - [x] [28 — Observabilidad (Prometheus/Grafana)](28-observability/28-observabilidad.md)
 - [x] [29 — Ciberseguridad defensiva](29-security-lab/29-ciberseguridad-defensiva.md)
-- [ ] 30 — Fundamentos de OS Development
+- [x] [30 — Fundamentos de OS Development](30-osdev/30-fundamentos-de-os-development.md)
 
 ---
 
