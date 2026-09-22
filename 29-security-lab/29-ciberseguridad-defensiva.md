@@ -168,4 +168,33 @@ ssh fabian@localhost
 
 ---
 
+## Evidencias
+
+**01 — `lynis`: hardening index 67/100**
+255 tests realizados, firewall detectado y activo, sin software de detección de intrusiones ni antivirus instalado (esperado en una VM de estudio).
+
+![Lynis hardening index 67](evidencias/01-lynis-hardening-index-67.png)
+
+**02 — Sugerencias de `lynis`**
+Lista completa de recomendaciones con sus IDs (`BOOT-5122`, `FILE-6310`, `PKGS-7398`, etc.), evaluadas críticamente en vez de aplicadas ciegamente.
+
+![Sugerencias de lynis](evidencias/02-lynis-sugerencias.png)
+
+**03 — `arch-audit`: vulnerabilidades reales encontradas**
+Varios paquetes con CVEs conocidos, incluyendo `grub` y `libxml2` en riesgo alto.
+
+![arch-audit vulnerabilidades encontradas](evidencias/03-arch-audit-vulnerabilidades-encontradas.png)
+
+**04 — `pacman -Syu`: actualización del sistema**
+10 paquetes actualizados como intento de remediar las vulnerabilidades detectadas.
+
+![pacman -Syu actualización](evidencias/04-pacman-syu-actualizacion.png)
+
+**05 — `arch-audit` después de actualizar: la mayoría persiste**
+El mismo conjunto de vulnerabilidades (incluyendo `cpio`) siguió apareciendo — lección real de que no todo CVE tiene un parche empaquetado disponible de inmediato, y que la seguridad defensiva requiere evaluación continua, no un solo `update` que "resuelve todo".
+
+![arch-audit post actualización](evidencias/05-arch-audit-post-actualizacion.png)
+
+---
+
 **Próximo módulo:** 30 — Fundamentos de OS Development (cierre del curso).
