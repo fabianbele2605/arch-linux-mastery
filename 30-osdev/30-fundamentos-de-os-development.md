@@ -142,6 +142,70 @@ qemu-system-x86_64 -drive format=raw,file=boot.bin
 
 ---
 
+## Evidencias
+
+**01 — `boot.asm`: código inicial, con un typo escondido**
+El código usa `mov si, mensaje` y `mensaje db "..."` como si coincidieran — pero la etiqueta real quedó tipeada `mesaje` (sin la primera "n"). Bug real de tipeo, no intencional.
+
+![boot.asm código inicial con typo](evidencias/01-boot-asm-codigo-inicial-con-typo.png)
+
+**02 — `nasm`: `error: symbol 'mensaje' not defined`**
+El ensamblador confirma el typo: `imprimir` referencia `mensaje`, pero solo existe la etiqueta `mesaje`. SÍNTOMA → LOG → CAUSA RAÍZ en un solo mensaje de error.
+
+![nasm error symbol mensaje not defined](evidencias/02-nasm-error-symbol-mensaje-not-defined.png)
+
+**03 — Compilación OK tras corregir el typo, pero QEMU falla: `gtk initialization failed`**
+`boot.bin` pesa 512 bytes exactos y termina en `55aa` (firma válida) — el binario está bien. El problema es el entorno: QEMU no tiene backend gráfico GTK disponible en esta VM.
+
+![compilación ok pero qemu gtk initialization failed](evidencias/03-compilacion-ok-pero-qemu-gtk-initialization-failed.png)
+
+**04 — SeaBIOS arranca, pantalla en blanco**
+Cambiando el display de QEMU, el boot sector sí arranca (`Booting from Hard Disk...`) pero no aparece ningún mensaje en pantalla — segundo bug, distinto del primero.
+
+![seabios arranca pantalla en blanco](evidencias/04-seabios-arranca-pantalla-en-blanco.png)
+
+**05 — Sin mensaje: registros de segmento `DS`/`ES` sin inicializar**
+El cursor parpadea, pero el string nunca se imprime. Causa raíz: en real mode, `SI` se interpreta relativo a `DS`, y `DS`/`ES` arrancan con un valor indefinido del BIOS — el string se lee de la dirección de memoria equivocada.
+
+![sin mensaje ds es sin inicializar](evidencias/05-sin-mensaje-ds-es-sin-inicializar.png)
+
+**06 — Fix: inicializar `DS`/`ES` en `nano`**
+Se agrega `xor ax, ax` / `mov ds, ax` / `mov es, ax` al principio del código, para forzar `DS=ES=0` antes de usar `SI`.
+
+![fix inicializar ds es en nano](evidencias/06-fix-inicializar-ds-es-en-nano.png)
+
+**07 — Reintento: sigue sin mostrar el mensaje**
+Con `DS`/`ES` ya corregidos, la pantalla sigue en blanco — evidencia de que había un tercer bug independiente, todavía sin diagnosticar en este punto.
+
+![reintento sigue sin mostrar mensaje](evidencias/07-reintento-sigue-sin-mostrar-mensaje.png)
+
+**08 — `cat boot.asm`: confirmando que el fix de `DS`/`ES` quedó aplicado**
+Verificación de que el código en disco tiene el fix del paso 06, antes de seguir buscando el siguiente bug.
+
+![cat boot.asm confirmando fix ds es](evidencias/08-cat-boot-asm-confirmando-fix-ds-es.png)
+
+**09 — Recompilación y `qemu-system-x86_64 -display curses`**
+Se prueba con otro backend de display para descartar que el problema fuera del emulador y no del código.
+
+![recompilación qemu display curses](evidencias/09-recompilacion-qemu-display-curses.png)
+
+**10 — Tercer intento: sigue en blanco**
+Confirmado: el problema es del código, no del display. Causa raíz encontrada — falta inicializar `BX` (número de página de video) antes de llamar a la interrupción `int 0x10`.
+
+![tercer intento sigue en blanco](evidencias/10-tercer-intento-sigue-en-blanco.png)
+
+**11 — Fix: agregar `xor bx, bx` antes de `int 0x10`**
+El registro `BX` (específicamente `BH`, número de página) quedaba con basura de memoria; sin inicializarlo, la función `0x0e` de la interrupción de video del BIOS no imprime nada de forma confiable.
+
+![fix agregar bx e int 0x10](evidencias/11-fix-agregar-bx-e-int-0x10.png)
+
+**12 — Éxito: `Hola desde mi propio sistema operativo!` impreso en pantalla**
+Los tres bugs (typo `mensaje`/`mesaje`, `DS`/`ES` sin inicializar, `BX` sin inicializar) diagnosticados y corregidos — el boot sector arranca y muestra su mensaje, cerrando el curso completo.
+
+![éxito mensaje impreso en pantalla](evidencias/12-exito-mensaje-impreso-en-pantalla.png)
+
+---
+
 ## Checklist de cierre del módulo (y del curso completo)
 
 - [ ] Escribí un boot sector real en ensamblador x86.
