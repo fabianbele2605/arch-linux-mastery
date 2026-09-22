@@ -187,4 +187,35 @@ ansible-playbook -i inventario.ini playbook.yml
 
 ---
 
+## Evidencias
+
+**01 — Ansible instalado**
+`ansible [core 2.21.4]`, con todas sus dependencias de Python.
+
+![Ansible instalado](evidencias/01-ansible-instalado.png)
+
+**02 — Inventario y playbook**
+`inventario.ini` con conexión local, y `playbook.yml` con las 3 tareas (htop, sshd, archivo de marca).
+
+![Inventario y playbook](evidencias/02-inventario-y-playbook.png)
+
+**03 — Primer intento: falla por falta de contraseña sudo**
+`become: true` requiere escalar privilegios; sin `--ask-become-pass`, Ansible falla con `sudo: a password is required`.
+
+![Error sudo password required](evidencias/03-error-sudo-password-required.png)
+
+**04 — Playbook exitoso: `ok=4 changed=1`**
+Con `--ask-become-pass`, corrió completo. `htop` y `sshd` ya estaban configurados de módulos anteriores (`ok`, sin cambio); solo el archivo de marca fue nuevo (`changed`).
+
+![Playbook exitoso](evidencias/04-playbook-exitoso-ok4-changed1.png)
+
+**05 — Idempotencia verificada: `ok=4 changed=0`**
+Corriendo el mismo playbook una segunda vez, nada cambió — el sistema ya estaba exactamente en el estado deseado.
+
+![Idempotencia verificada](evidencias/05-idempotencia-ok4-changed0.png)
+
+> Nota: la parte de GitHub Actions se hizo en el navegador (host), no en la VM — el pipeline real quedó documentado en el propio repo, en `.github/workflows/check-links.yml`, incluyendo el commit que corrigió un salto de línea real que rompía el YAML.
+
+---
+
 **Próximo módulo:** 28 — Observabilidad (Prometheus/Grafana).
