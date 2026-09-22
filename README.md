@@ -2,7 +2,7 @@
 
 **De Cero a Ingeniero de Sistemas Linux**
 
-![Progreso](https://img.shields.io/badge/progreso-27%2F30%20m%C3%B3dulos-brightgreen)
+![Progreso](https://img.shields.io/badge/progreso-28%2F30%20m%C3%B3dulos-brightgreen)
 ![Break & Fix](https://img.shields.io/badge/break%20%26%20fix-8%2F10%20incidentes-orange)
 ![Fases](https://img.shields.io/badge/fases-4%2F6%20completas-blue)
 ![Método](https://img.shields.io/badge/m%C3%A9todo-hands--on%20en%20Arch%20Linux%20real-informational)
@@ -69,7 +69,7 @@ Lo uso como caso de estudio de **aprender una habilidad técnica profunda con un
 - [x] [25 — Servidores web (Nginx/Caddy/TLS)](25-web-servers/25-servidores-web.md)
 - [x] [26 — Bases de datos (PostgreSQL)](26-databases/26-bases-de-datos.md)
 - [x] [27 — DevOps (CI/CD, Ansible, IaC)](27-devops/27-devops.md)
-- [ ] 28 — Observabilidad (Prometheus/Grafana)
+- [x] [28 — Observabilidad (Prometheus/Grafana)](28-observability/28-observabilidad.md)
 - [ ] 29 — Ciberseguridad defensiva
 - [ ] 30 — Fundamentos de OS Development
 
